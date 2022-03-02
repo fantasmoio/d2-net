@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 import numpy as np
 
 import torch
@@ -151,17 +149,3 @@ def interpolate_dense_features(pos, dense_features, return_corners=False):
         ], dim=0)
         return [descriptors, pos, ids, corners]
 
-
-def savefig(filepath, fig=None, dpi=None):
-    # TomNorway - https://stackoverflow.com/a/53516034
-    if not fig:
-        fig = plt.gcf()
-
-    plt.subplots_adjust(0, 0, 1, 1, 0, 0)
-    for ax in fig.axes:
-        ax.axis('off')
-        ax.margins(0, 0)
-        ax.xaxis.set_major_locator(plt.NullLocator())
-        ax.yaxis.set_major_locator(plt.NullLocator())
-
-    fig.savefig(filepath, pad_inches=0, bbox_inches='tight', dpi=dpi)

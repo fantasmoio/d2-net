@@ -46,7 +46,7 @@ class DenseFeatureExtractionModule(nn.Module):
 
 
 class D2Net(nn.Module):
-    def __init__(self, model_file=None, use_relu=True, use_cuda=True):
+    def __init__(self, model_file=None, use_relu=True, use_cuda=True, device=None):
         super(D2Net, self).__init__()
 
         self.dense_feature_extraction = DenseFeatureExtractionModule(
@@ -58,10 +58,14 @@ class D2Net(nn.Module):
         self.localization = HandcraftedLocalizationModule()
 
         if model_file is not None:
-            if use_cuda:
+            #self.load_state_dict(torch.load(model_file)['model'])
+            if device is None:
                 self.load_state_dict(torch.load(model_file)['model'])
             else:
-                self.load_state_dict(torch.load(model_file, map_location='cpu')['model'])
+                tl = torch.load(model_file, map_location=device)
+
+                self.load_state_dict(torch.load(model_file, map_location=device)['model'])
+                self.to(device)
 
     def forward(self, batch):
         _, _, h, w = batch.size()
