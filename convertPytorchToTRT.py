@@ -1,3 +1,5 @@
+import logging
+
 import torch
 from torch2trt import torch2trt
 
@@ -28,7 +30,7 @@ model_file = "models/d2_tf.pth"
 
 # CUDA
 use_cuda = torch.cuda.is_available()
-print("Using cuda, ", use_cuda)
+logging.info(("Using cuda, ", use_cuda)
 device = torch.device("cuda:0" if use_cuda else "cpu")
 
 # Creating CNN model

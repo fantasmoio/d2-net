@@ -69,8 +69,6 @@ parser.set_defaults(use_relu=True)
 
 args = parser.parse_args()
 
-print(args)
-
 # Creating CNN model
 model = D2Net(
     model_file=args.model_file,
