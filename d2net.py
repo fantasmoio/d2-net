@@ -202,7 +202,7 @@ def prepareImage(image, params):
     scaling = 1.0
 
     if params.targetFocalLength and params.intrinsics:  # can't scale based on focal length if the images focal length is unknown
-        avgFocalLength = (params.intrinsics['fx'] + params.intrinsics['fy']) / 2.0
+        avgFocalLength = (params.intrinsics.fx + params.intrinsics.fy) / 2.0
         scaling = params.targetFocalLength / avgFocalLength
     elif params.maxSideLength:  # disregard maxSideLength
         scaleH = float(params.maxSideLength) / float(height)
@@ -221,10 +221,10 @@ def prepareImage(image, params):
 
         # adapt intrinsics
         if params.intrinsics:
-            params.intrinsics['cx'] *= scaling
-            params.intrinsics['cy'] *= scaling
-            params.intrinsics['fx'] *= scaling
-            params.intrinsics['fy'] *= scaling
+            params.intrinsics.cx *= scaling
+            params.intrinsics.cy *= scaling
+            params.intrinsics.fx *= scaling
+            params.intrinsics.fy *= scaling
 
     rotMat = None
     # if we need to rotate
@@ -294,7 +294,9 @@ def processProcedure(q, exit, i, method, fp16, outpath, ready):
 
             keypoints, descriptors = pickTopDescriptorsAndTransform(keypoints, descriptors, scores, params, rotMat, bounds)
             output.send([keypoints, descriptors, params.intrinsics])
+
         except:
+            logging.exception('Error processing image')
             output.send([None, None, None])
 
 
