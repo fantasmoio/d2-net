@@ -13,4 +13,5 @@ hpatches_sequences/cache-top
 vlfeat
 *.d2-net
 dist
-.egg-info
+*.egg-info
+.idea
