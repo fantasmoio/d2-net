@@ -29,7 +29,8 @@ try:
 
     trtavailable = True
 except ImportError:
-    logging.warning("Failed to import TRT. Only torch is supported!")
+    pass
+    #logging.warning("Failed to import TRT. Only torch is supported!")
 
 # Hardcoded for now
 MODELPATH = "/models/"
