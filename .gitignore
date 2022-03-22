@@ -12,3 +12,5 @@ hpatches_sequences/cache-top
 .ipynb_checkpoints
 vlfeat
 *.d2-net
+dist
+.egg-info

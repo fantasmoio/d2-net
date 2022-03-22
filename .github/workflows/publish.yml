@@ -1,0 +1,39 @@
+name: Publish package to internal AWS artifact repository
+on:
+  pull_request:
+  push:
+    tags:
+      - *
+
+env:
+  AWS_REGION: eu-west-3
+  ROLE_TO_ASSUME: arn:aws:iam::445621407199:role/GitHubActionsRunner
+
+jobs:
+  publish:
+    name: Build
+    runs-on: [self-hosted, linux, aws]
+    steps:
+      - name: Install Python 3
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Login to CodeArtifact and setup Pip and Twine
+        run: bin/codeartifact.sh
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel twine build
+
+      - name: Build
+        run: python -m build
+
+      - name: Use Twine to publish the package
+        run: twine upload --repository codeartifact dist/*
+
+
+
