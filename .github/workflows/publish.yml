@@ -1,8 +1,8 @@
 name: Publish package to internal AWS artifact repository
 on:
-  pull_request:
   push:
     tags:
+      - v*
 
 env:
   AWS_REGION: eu-west-3
